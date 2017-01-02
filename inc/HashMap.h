@@ -36,6 +36,8 @@ class HashMap
             {
                 delete hashTable[i]; //delete all the hash buckets
             }
+
+            delete []hashTable;
 		}
 	
 		//Function to find an entry in the hash map matching the key.
