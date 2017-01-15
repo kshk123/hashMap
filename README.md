@@ -1,5 +1,7 @@
 # hashMap
-A concurrent thread-safe hash map implemented in C++
+A concurrent thread-safe hash map implemented in C++.
+Anyone can use the hash-map by simply including the header files in the "inc" folder.
+A main is provided to test the basic scenarios of the hash-map.
 
 The hash map is implemented as an array of hash buckets.
 Each hash bucket is a single linked list of hash nodes and has a mutex associated with it.
