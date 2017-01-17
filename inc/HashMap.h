@@ -1,5 +1,5 @@
-#ifndef _HASN_MAP_H__
-#define _HASN_MAP_H__
+#ifndef _HASH_MAP_H__
+#define _HASH_MAP_H__
 
 #include <stdint.h> 
 #include <iostream> 
