@@ -1,5 +1,5 @@
-#ifndef _HASH_MAP_H__
-#define _HASH_MAP_H__
+#ifndef HASH_MAP_H_
+#define HASH_MAP_H_
 
 #include <stdint.h> 
 #include <iostream> 
@@ -20,66 +20,66 @@ const int HASH_SIZE_DEFAULT = 1031; // A prime number as hash size gives a bette
 template <typename K, typename V, typename F = std::hash<K> >
 class HashMap
 {
-	public:
-		HashMap(uint32_t hashSize_ = HASH_SIZE_DEFAULT) : hashSize(hashSize_)
-		{
-			hashTable = new HashBucket<K, V> * [hashSize](); //create the hash table as an array of hash buckets
-			for(uint32_t i = 0; i < hashSize; i++)
-			{
-				hashTable[i] = new HashBucket<K, V>(); //create the hash buckets
-			}
-		}
+    public:
+        HashMap(uint32_t hashSize_ = HASH_SIZE_DEFAULT) : hashSize(hashSize_)
+        {
+            hashTable = new HashBucket<K, V> * [hashSize](); //create the hash table as an array of hash buckets
+            for(uint32_t i = 0; i < hashSize; i++)
+            {
+                hashTable[i] = new HashBucket<K, V>(); //create the hash buckets
+            }
+        }
 
-		~HashMap()
-		{
-			for(uint32_t i = 0; i < hashSize; i++)
+        ~HashMap()
+        {
+            for(uint32_t i = 0; i < hashSize; i++)
             {
                 delete hashTable[i]; //delete all the hash buckets
             }
 
             delete []hashTable;
-		}
-	
-		//Function to find an entry in the hash map matching the key.
+        }
+    
+        //Function to find an entry in the hash map matching the key.
         //If key is found, the corresponding value is copied into the parameter "value" and function returns true.
         //If key is not found, function returns false.
-		bool find(const K &key, V &value) const 
-		{
-        	uint64_t hashValue = hashFn(key) % hashSize ;
-        	HashBucket<K, V> * bucket = hashTable[hashValue];
-        	return bucket->find(key, value);
-    	}
+        bool find(const K &key, V &value) const 
+        {
+            uint64_t hashValue = hashFn(key) % hashSize ;
+            HashBucket<K, V> * bucket = hashTable[hashValue];
+            return bucket->find(key, value);
+        }
 
-		//Function to insert into the hash map.
+        //Function to insert into the hash map.
         //If key already exists, update the value, else insert a new node in the bucket with the <key, value> pair.
-		void insert(const K &key, const V &value) 
-		{
-			uint64_t hashValue = hashFn(key) % hashSize ;
-        	HashBucket<K, V> * bucket = hashTable[hashValue];
-			bucket->insert(key, value);
-    	}
+        void insert(const K &key, const V &value) 
+        {
+            uint64_t hashValue = hashFn(key) % hashSize ;
+            HashBucket<K, V> * bucket = hashTable[hashValue];
+            bucket->insert(key, value);
+        }
 
-		//Function to remove an entry from the bucket, if found
-		void erase(const K &key) 
-		{
-			uint64_t hashValue = hashFn(key) % hashSize ;
-        	HashBucket<K, V> * bucket = hashTable[hashValue];
-			bucket->erase(key);
-    	}	
+        //Function to remove an entry from the bucket, if found
+        void erase(const K &key) 
+        {
+            uint64_t hashValue = hashFn(key) % hashSize ;
+            HashBucket<K, V> * bucket = hashTable[hashValue];
+            bucket->erase(key);
+        }   
 
-		//Function to clean up the hasp map, i.e., remove all entries from it
-		void clear()
-		{
-			for(uint32_t i = 0; i < hashSize; i++)
+        //Function to clean up the hasp map, i.e., remove all entries from it
+        void clear()
+        {
+            for(uint32_t i = 0; i < hashSize; i++)
             {
                 (hashTable[i])->clear();
             }
-		}	
+        }   
 
-	private:
-		HashBucket<K, V> ** hashTable;
-		F hashFn;
-		uint32_t hashSize;
+    private:
+        HashBucket<K, V> ** hashTable;
+        F hashFn;
+        uint32_t hashSize;
 };
 
 #endif
