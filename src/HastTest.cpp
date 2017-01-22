@@ -4,7 +4,7 @@
 
 void testSingleThreadStringKey()
 {
-    HashMap<std::string, int> stringMap(1001);
+    CTSL::HashMap<std::string, int> stringMap(1001);
 
     stringMap.insert("test1", 200);
     stringMap.insert("test2", 670);
@@ -72,7 +72,7 @@ void testSingleThreadStringKey()
 
 void testSingleThreadIntegerKey()
 {
-    HashMap<int, int> integerMap(29);
+    CTSL::HashMap<int, int> integerMap(29);
 
     integerMap.insert(10, 200);
     integerMap.insert(20, 670);
@@ -139,12 +139,12 @@ void testSingleThreadIntegerKey()
 
 void testSingleThread()
 {
-    //Single threaded test with kets as std::string and integer
+    //Single threaded test with keys as std::string and integer
     testSingleThreadStringKey();
     testSingleThreadIntegerKey();   
 }
 
-void testMultiThreadIntegerKey_Func1(HashMap<int, int> &integerMap)
+void testMultiThreadIntegerKey_Func1(CTSL::HashMap<int, int> &integerMap)
 {
     std::cout << "Entering thread 1" << std::endl;
     integerMap.insert(10, 200);
@@ -212,7 +212,7 @@ void testMultiThreadIntegerKey_Func1(HashMap<int, int> &integerMap)
     }
 }
 
-void testMultiThreadIntegerKey_Func2(HashMap<int, int> &integerMap)
+void testMultiThreadIntegerKey_Func2(CTSL::HashMap<int, int> &integerMap)
 {
     std::cout << "Entering thread 2" << std::endl;
     integerMap.insert(10, 2002);
@@ -286,7 +286,7 @@ int main()
     testSingleThread(); //Single threaded test  
     
     //Multi threaded test with two threads
-    HashMap<int, int> integerMap;
+    CTSL::HashMap<int, int> integerMap;
     std::thread firstThread(testMultiThreadIntegerKey_Func1, ref(integerMap));
     std::thread secondThread(testMultiThreadIntegerKey_Func2, ref(integerMap));
 
