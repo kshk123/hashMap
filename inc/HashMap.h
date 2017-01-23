@@ -40,6 +40,11 @@ namespace CTSL //Concurrent Thread Safe Library
 
                 delete []hashTable;
             }
+            //Copy and Move of the HashMap are not supported at this moment
+            HashMap(const HashMap&) = delete;
+            HashMap(HashMap&&) = delete;
+            HashMap& operator=(const HashMap&) = delete;  
+            HashMap& operator=(HashMap&&) = delete;
         
             //Function to find an entry in the hash map matching the key.
             //If key is found, the corresponding value is copied into the parameter "value" and function returns true.
@@ -78,11 +83,6 @@ namespace CTSL //Concurrent Thread Safe Library
             }   
 
         private:
-            //Copy and Move of the HashMap are not supported at this moment
-            HashMap(const HashMap&) = default;
-            HashMap(HashMap&&) = default;
-            HashMap& operator=(const HashMap&) & = default;  
-            HashMap& operator=(HashMap&&) & = default;
             
 
             HashBucket<K, V> ** hashTable;
