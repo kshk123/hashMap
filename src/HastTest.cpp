@@ -4,7 +4,7 @@
 
 void testSingleThreadStringKey()
 {
-    CTSL::HashMap<std::string, int> stringMap(1001);
+    CTSL::HashMap<std::string, int> stringMap(2048);
 
     stringMap.insert("test1", 200);
     stringMap.insert("test2", 670);
@@ -37,7 +37,7 @@ void testSingleThreadStringKey()
     {
         std::cout << "Did not find value  for key \"test1\"" << std::endl;
     }
-    
+
     stringMap.erase("test1");
     if(stringMap.find("test1", value))
     {
@@ -72,7 +72,7 @@ void testSingleThreadStringKey()
 
 void testSingleThreadIntegerKey()
 {
-    CTSL::HashMap<int, int> integerMap(29);
+    CTSL::HashMap<int, int> integerMap(32);
 
     integerMap.insert(10, 200);
     integerMap.insert(20, 670);
@@ -105,7 +105,7 @@ void testSingleThreadIntegerKey()
     {
         std::cout << "Did not find value  for key 20" << std::endl;
     }
-    
+
     integerMap.erase(20);
     if(integerMap.find(20, value))
     {
@@ -179,7 +179,7 @@ void testMultiThreadIntegerKey_Func1(CTSL::HashMap<int, int> &integerMap)
     {
         std::cout << "Thread 1: Did not find value  for key 20 in HashMap " << &integerMap  << std::endl;
     }
-    
+
     integerMap.erase(20);
     std::this_thread::sleep_for(std::chrono::seconds(1));
     if(integerMap.find(20, value))
@@ -249,7 +249,7 @@ void testMultiThreadIntegerKey_Func2(CTSL::HashMap<int, int> &integerMap)
     {
         std::cout << "Thread 2: Did not find value  for key 20 in HashMap " << &integerMap << std::endl;
     }
-    
+
     integerMap.erase(20);
     if(integerMap.find(20, value))
     {
@@ -284,7 +284,7 @@ void testMultiThreadIntegerKey_Func2(CTSL::HashMap<int, int> &integerMap)
 int main()
 {
     testSingleThread(); //Single threaded test  
-    
+
     //Multi threaded test with two threads
     CTSL::HashMap<int, int> integerMap;
     std::thread firstThread(testMultiThreadIntegerKey_Func1, ref(integerMap));
