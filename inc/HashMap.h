@@ -1,11 +1,12 @@
 #ifndef HASH_MAP_H_
 #define HASH_MAP_H_
 
-#include <cstdint> 
-#include <iostream> 
+#include <cstdint>
+#include <cassert>
+#include <iostream>
 #include <functional>
-#include <mutex> 
-#include "HashNode.h" 
+#include <mutex>
+#include "HashNode.h"
 
 constexpr size_t HASH_SIZE_DEFAULT = 2048;
 
@@ -25,6 +26,9 @@ namespace CTSL //Concurrent Thread Safe Library
         public:
             HashMap(size_t hashSize_ = HASH_SIZE_DEFAULT) : hashSize(hashSize_)
             {
+                assert(hashSize_ > 0 && "Hash size muste be > 0");
+                assert((hashSize_ & (hashSize_ - 1)) == 0 && "Hash size must be power of 2");
+
                 hashTable = new HashBucket<K, V>[hashSize]; //create the hash table as an array of hash buckets
             }
 
