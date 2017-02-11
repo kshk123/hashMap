@@ -24,21 +24,12 @@ namespace CTSL //Concurrent Thread Safe Library
         public:
             HashMap(size_t hashSize_ = HASH_SIZE_DEFAULT) : hashSize(hashSize_)
             {
-                hashTable = new HashBucket<K, V> * [hashSize](); //create the hash table as an array of hash buckets
-                for(size_t i = 0; i < hashSize; i++)
-                {
-                    hashTable[i] = new HashBucket<K, V>(); //create the hash buckets
-                }
+                hashTable = new HashBucket<K, V>[hashSize]; //create the hash table as an array of hash buckets
             }
 
             ~HashMap()
             {
-                for(size_t i = 0; i < hashSize; i++)
-                {
-                    delete hashTable[i]; //delete all the hash buckets
-                }
-
-                delete []hashTable;
+                delete [] hashTable;
             }
             //Copy and Move of the HashMap are not supported at this moment
             HashMap(const HashMap&) = delete;
@@ -52,8 +43,7 @@ namespace CTSL //Concurrent Thread Safe Library
             bool find(const K &key, V &value) const 
             {
                 size_t hashValue = hashFn(key) % hashSize ;
-                HashBucket<K, V> * bucket = hashTable[hashValue];
-                return bucket->find(key, value);
+                return hashTable[hashValue].find(key, value);
             }
 
             //Function to insert into the hash map.
@@ -61,16 +51,14 @@ namespace CTSL //Concurrent Thread Safe Library
             void insert(const K &key, const V &value) 
             {
                 size_t hashValue = hashFn(key) % hashSize ;
-                HashBucket<K, V> * bucket = hashTable[hashValue];
-                bucket->insert(key, value);
+                hashTable[hashValue].insert(key, value);
             }
 
             //Function to remove an entry from the bucket, if found
             void erase(const K &key) 
             {
                 size_t hashValue = hashFn(key) % hashSize ;
-                HashBucket<K, V> * bucket = hashTable[hashValue];
-                bucket->erase(key);
+                hashTable[hashValue].erase(key);
             }   
 
             //Function to clean up the hasp map, i.e., remove all entries from it
@@ -78,16 +66,14 @@ namespace CTSL //Concurrent Thread Safe Library
             {
                 for(size_t i = 0; i < hashSize; i++)
                 {
-                    (hashTable[i])->clear();
+                    (hashTable[i]).clear();
                 }
             }   
 
         private:
-            
-
-            HashBucket<K, V> ** hashTable;
+            HashBucket<K, V> * hashTable;
             F hashFn;
-            size_t hashSize;
+            const size_t hashSize;
     };
 }
 #endif
