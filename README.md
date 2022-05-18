@@ -4,7 +4,7 @@ A concurrent thread-safe hash map implemented in C++.
 Anyone can use the hash-map by simply including the header files in the "inc" folder.
 Currently, copy and move of the hash is not supported.
 
-A main is provided to test the basic scenarios of the hashMap.
+A "main" is provided to test the basic scenarios of the hashMap.
 
 The hash map is implemented as an array of hash buckets.
 Each hash bucket is a single linked list of hash nodes and has a mutex associated with it.
