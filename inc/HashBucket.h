@@ -11,7 +11,7 @@ namespace CTSL // Concurrent Thread Safe Library
 template <typename K, typename V> class HashBucket
 {
 public:
-  HashBucket() : head(nullptr)
+  HashBucket()
   {
   }
 
@@ -26,7 +26,7 @@ public:
   bool find(const K &key, V &value) const
   {
     // A shared mutex is used to enable mutiple concurrent reads
-    std::shared_lock<std::shared_timed_mutex> lock(mutex_);
+    std::shared_lock lock(mutex_);
     HashNode<K, V> *node = head;
 
     while (node != nullptr)
@@ -46,7 +46,7 @@ public:
   void insert(const K &key, const V &value)
   {
     // Exclusive lock to enable single write in the bucket
-    std::unique_lock<std::shared_timed_mutex> lock(mutex_);
+    std::unique_lock lock(mutex_);
     HashNode<K, V> *prev = nullptr;
     HashNode<K, V> *node = head;
 
@@ -77,7 +77,7 @@ public:
   void erase(const K &key)
   {
     // Exclusive lock to enable single write in the bucket
-    std::unique_lock<std::shared_timed_mutex> lock(mutex_);
+    std::unique_lock lock(mutex_);
     HashNode<K, V> *prev = nullptr;
     HashNode<K, V> *node = head;
 
@@ -109,7 +109,7 @@ public:
   void clear()
   {
     // Exclusive lock to enable single write in the bucket
-    std::unique_lock<std::shared_timed_mutex> lock(mutex_);
+    std::unique_lock lock(mutex_);
     HashNode<K, V> *prev = nullptr;
     HashNode<K, V> *node = head;
     while (node != nullptr)
@@ -122,7 +122,7 @@ public:
   }
 
 private:
-  HashNode<K, V> *head;                   // The head node of the bucket
+  HashNode<K, V> *head = nullptr;         // The head node of the bucket
   mutable std::shared_timed_mutex mutex_; // The mutex for this bucket
 };
 } // namespace CTSL
