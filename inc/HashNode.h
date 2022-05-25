@@ -7,16 +7,22 @@ namespace CTSL // Concurrent Thread Safe Library
 template <typename K, typename V> class HashNode
 {
 public:
-  HashNode() : next(nullptr)
+  HashNode()
   {
   }
-  HashNode(K key_, V value_) : next(nullptr), key(key_), value(value_)
+  HashNode(K key_, V value_) : key(key_), value(value_)
   {
   }
   ~HashNode()
   {
     next = nullptr;
   }
+
+  HashNode(const HashNode&) = delete;
+  HashNode(HashNode&&)      = delete;
+  HashNode& operator=(const HashNode&) = delete;
+  HashNode& operator=(HashNode&&) = delete;
+
 
   const K &getKey() const
   {
@@ -31,7 +37,7 @@ public:
     return value;
   }
 
-  HashNode *next; // Pointer to the next node in the same bucket
+  HashNode *next = nullptr; // Pointer to the next node in the same bucket
 private:
   K key;   // the hash key
   V value; // the value corresponding to the key
