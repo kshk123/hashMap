@@ -42,7 +42,7 @@ jobs:
           cmake -S . -B build
           build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
           cd build
-          ,/hashMap
+          ./hashMap
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
