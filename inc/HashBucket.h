@@ -3,6 +3,7 @@
 
 #include "HashNode.h"
 #include <shared_mutex>
+#include <mutex>
 
 namespace CTSL // Concurrent Thread Safe Library
 {
