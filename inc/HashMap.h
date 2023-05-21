@@ -10,10 +10,10 @@
 constexpr size_t HASH_SIZE_DEFAULT = 1031;      // A prime number as hash size gives a better distribution of values in buckets
 namespace CTSL // Concurrent Thread Safe Library
 {
-// The class represting the hash map.
+// The class representing the hash map.
 // It is expected for user defined types, the hash function will be provided.
 // By default, the std::hash function will be used
-// If the hash size is not provided, then a defult size of 1031 will be used
+// If the hash size is not provided, then a default size of 1031 will be used
 // The hash table itself consists of an array of hash buckets.
 // Each hash bucket is implemented as singly linked list with the head as a dummy node created
 // during the creation of the bucket. All the hash buckets are created during the construction of the map.
